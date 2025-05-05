@@ -1,0 +1,21 @@
+.dialog-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .dialog-title {
+    font-size: 1.8em;
+    color: #ff5722;
+    margin-bottom: 10px;
+  }
+  
+  .dialog-content p {
+    font-size: 1.2em;
+    color: #555;
+    margin: 0;
+  }
+  
+  .dialog-actions {
+    margin-top: 20px;
+  }
