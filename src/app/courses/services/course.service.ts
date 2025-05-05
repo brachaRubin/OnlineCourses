@@ -24,8 +24,8 @@ export class CoursesService {
     const token = localStorage.getItem('token'); // עדיף להשתמש ב-HttpInterceptor במקום
     return new HttpHeaders({
       Authorization: `Bearer ${token}`,
-    });
-  }
+      });
+    }
 
   // טיפול בשגיאות HTTP
   private handleError(error: any): Observable<never> {
@@ -47,9 +47,6 @@ export class CoursesService {
       .pipe(catchError(this.handleError));
   }
 
-  // getEnrolledCourses(studentId: number): Observable<{ id: number, title: string, description: string, teacherId: number }[]> {
-  //   return this.http.get<{ id: number, title: string, description: string, teacherId: number }[]>(`${this.baseUrl}/students/${studentId}/enrolled-courses`);
-  // }
   getEnrolledCourses(studentId: number): Observable<{ id: number, title: string, description: string, teacherId: number }[]> {
     if (!studentId || studentId <= 0) {
       console.error('Invalid student ID:', studentId);
@@ -81,7 +78,6 @@ export class CoursesService {
       }
     );
   }
-  // http://localhost:3000/api/courses/2/unenroll
 
   getLessons(courseId: number): Observable<Lesson[]> {
     return this.http
@@ -93,17 +89,31 @@ export class CoursesService {
   }
 
   // פונקציות למורים בלבד
-  createCourse(course: Course): Observable<Course> {
+  private getTeacherId(): number {
+    const teacherId = localStorage.getItem('userId');
+    if (!teacherId) {
+      throw new Error('Teacher ID is not found in localStorage');
+    }
+    return parseInt(teacherId, 10); // המרה למספר שלם
+  }
+  createCourse(course: Omit<Course, 'teacherId'>): Observable<Course> {
+    const teacherId = this.getTeacherId(); // לקיחת ה-teacherId מתוך localStorage
+    const courseWithTeacherId = { ...course, teacherId };
+
     return this.http
-      .post<Course>(this.baseUrl, course, { headers: this.getHeaders() })
+      .post<Course>(this.baseUrl, courseWithTeacherId, { headers: this.getHeaders() })
       .pipe(catchError(this.handleError));
   }
 
-  updateCourse(courseId: number, course: Course): Observable<Course> {
+  updateCourse(courseId: number, course: Omit<Course, 'teacherId'>): Observable<Course> {
+    const teacherId = this.getTeacherId(); // לקיחת ה-teacherId מתוך localStorage
+    const courseWithTeacherId = { ...course, teacherId };
+
     return this.http
-      .put<Course>(`${this.baseUrl}/${courseId}`, course, { headers: this.getHeaders() })
+      .put<Course>(`${this.baseUrl}/${courseId}`, courseWithTeacherId, { headers: this.getHeaders() })
       .pipe(catchError(this.handleError));
   }
+
 
   deleteCourse(courseId: number): Observable<any> {
     return this.http

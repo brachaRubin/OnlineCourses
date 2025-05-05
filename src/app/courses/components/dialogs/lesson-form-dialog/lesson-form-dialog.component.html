@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Add Lesson</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Lesson Title</mat-label>
+    <input matInput [(ngModel)]="lesson().title" placeholder="Enter lesson title" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Lesson Content</mat-label>
+    <textarea
+      matInput
+      [(ngModel)]="lesson().content"
+      placeholder="Enter lesson content"
+    ></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+</mat-dialog-actions>
