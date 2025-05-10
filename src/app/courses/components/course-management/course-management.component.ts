@@ -10,10 +10,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { CourseFormDialogComponent } from '../dialogs/course-form-dialog/course-form-dialog.component';
 import { LessonFormDialogComponent } from '../dialogs/lesson-form-dialog/lesson-form-dialog.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-course-management',
-  imports: [ CommonModule,FormsModule,MatCardModule,MatIconModule],
+  imports: [ CommonModule,FormsModule,MatCardModule,MatIconModule,MatTooltipModule],
   templateUrl: './course-management.component.html',
   styleUrl: './course-management.component.css'
 })
@@ -102,22 +103,51 @@ export class CourseManagementComponent implements OnInit {
     }
   }
 
-  // פונקציה להוספת שיעור חדש לקורס
-  addLesson(course: Course): void {
+  // // פונקציה להוספת שיעור חדש לקורס
+  // addLesson(course: Course): void {
+  //   const dialogRef = this.dialog.open(LessonFormDialogComponent, {
+  //     width: '500px',
+  //     data: { courseId: course.id }, // שולח את מזהה הקורס לדיאלוג
+  //   });
+
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     if (result) {
+  //       this.coursesService.createLesson(course.id!, result).subscribe(
+  //         () => this.showMessage('Lesson added successfully'),
+  //         () => this.showMessage('Failed to add lesson', true)
+  //       );
+  //     }
+  //   });
+  // }
+
+  openLessons(course: Course): void {
     const dialogRef = this.dialog.open(LessonFormDialogComponent, {
-      width: '500px',
+      width: '600px',
       data: { courseId: course.id },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.coursesService.createLesson(course.id!, result).subscribe(
-          () => this.showMessage('Lesson added successfully'),
-          () => this.showMessage('Failed to add lesson', true)
-        );
+        this.loadCourses(); // רענון רשימת הקורסים לאחר עדכון שיעורים
       }
     });
   }
+
+  // editLesson(course: Course, lesson: Lesson): void {
+  //   const dialogRef = this.dialog.open(LessonFormDialogComponent, {
+  //     width: '500px',
+  //     data: { courseId: course.id, lesson }, // שולח את מזהה הקורס והשיעור לדיאלוג
+  //   });
+
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     if (result) {
+  //       this.coursesService.updateLesson(course.id!, lesson.id!, result).subscribe(
+  //         () => this.showMessage('Lesson updated successfully'),
+  //         () => this.showMessage('Failed to update lesson', true)
+  //       );
+  //     }
+  //   });
+  // }
 
   // הצגת הודעות הצלחה/שגיאה
   private showMessage(message: string, isError: boolean = false): void {

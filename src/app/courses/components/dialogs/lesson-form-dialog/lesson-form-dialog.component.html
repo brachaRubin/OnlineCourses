@@ -1,19 +1,58 @@
-<h2 mat-dialog-title>Add Lesson</h2>
-<mat-dialog-content>
-  <mat-form-field appearance="fill">
-    <mat-label>Lesson Title</mat-label>
-    <input matInput [(ngModel)]="lesson().title" placeholder="Enter lesson title" />
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Lesson Content</mat-label>
-    <textarea
-      matInput
-      [(ngModel)]="lesson().content"
-      placeholder="Enter lesson content"
-    ></textarea>
-  </mat-form-field>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-raised-button color="primary" (click)="onSave()">Save</button>
-</mat-dialog-actions>
+<div class="lesson-dialog-container">
+  <h2 class="dialog-title">ניהול שיעורים</h2>
+
+  <!-- כפתור להוספת שיעור -->
+  <div class="add-lesson-container">
+    <button mat-raised-button color="primary" (click)="startAddingLesson()">הוסף שיעור</button>
+  </div>
+
+  <!-- טופס לעריכת או הוספת שיעור -->
+  <form *ngIf="isEditMode">
+    <mat-form-field appearance="fill">
+      <mat-label>כותרת</mat-label>
+      <input matInput [(ngModel)]="editedLesson().title" name="title" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>תוכן</mat-label>
+      <textarea matInput [(ngModel)]="editedLesson().content" name="content"></textarea>
+    </mat-form-field>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="saveLesson()">שמור</button>
+      <button mat-raised-button color="warn" (click)="cancelEdit()">בטל</button>
+    </div>
+  </form>
+
+  <!-- רשימת השיעורים -->
+  <div class="lesson-list">
+    <mat-card class="lesson-card" *ngFor="let lesson of lessons(); trackBy: trackByLessonId">
+      <mat-card-title>{{ lesson.title }}</mat-card-title>
+      <mat-card-content>
+        <p>{{ lesson.content }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-icon-button color="accent" (click)="startEditingLesson(lesson)" matTooltip="ערוך שיעור">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteLesson(lesson.id!)" matTooltip="מחק שיעור">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="pagination-container" *ngIf="totalPages > 1">
+    <button mat-icon-button (click)="previousPage()" [disabled]="currentPage === 1">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>{{ currentPage }} / {{ totalPages }}</span>
+    <button mat-icon-button (click)="nextPage()" [disabled]="currentPage === totalPages">
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-actions>
+    <button mat-button (click)="onCancel()">סגור</button>
+  </mat-dialog-actions>
+</div>
