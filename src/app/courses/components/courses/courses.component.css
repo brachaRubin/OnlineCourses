@@ -1,0 +1,98 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-top: 100px;
+  /* הוספת ריווח מלמעלה */
+}
+
+.course-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin: 10px 0;
+  padding: 15px;
+  position: relative;
+  background-image: url('/images/homePage.jpg');
+  /* הוספת תמונה כרקע */
+  background-size: cover;
+  /* כיסוי מלא של השטח */
+  background-position: center;
+  /* מיקום במרכז */
+  color: white;
+  /* שינוי צבע הטקסט ללבן */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  /* הרמה קלה במעבר עכבר */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  /* צל חזק יותר במעבר עכבר */
+}
+
+.course-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  /* הקטנת הריווח מלמטה */
+}
+
+.course-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+  /* הוספת ריווח בין התמונה לכותרת */
+}
+
+.enrolled-icon {
+  font-size: 24px;
+}
+
+.course-info {
+  margin-top: 0;
+  text-align: right;
+  /* יישור לימין */
+}
+
+.course-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  /* יישור לימין */
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #007bff;
+  /* צבע כחול */
+  color: white;
+  /* צבע לבן */
+  transition: background-color 0.3s ease;
+  /* אנימציה */
+}
+
+button:hover {
+  background-color: #0056b3;
+  /* צבע כחול כהה יותר */
+}
+.course-actions button {
+  background-color: #00acc1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.course-actions button:hover {
+  background-color: #00838f;
+}

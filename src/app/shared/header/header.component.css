@@ -1,0 +1,77 @@
+.header {
+  display: flex;
+  justify-content:  space-between;
+  /* יישור לשמאל */
+  align-items: center;
+  background: white;
+  padding: 2rem;
+  position: fixed;
+  /* הוספת ההגדרה הזו */
+  top: 0;
+  /* הצמדה לראש המסך */
+  left: 0;
+  /* הצמדה לצד שמאל של המסך */
+  width: 100%;
+  /* רוחב של 100% מהמסך */
+  z-index: 100;
+  border-bottom: 1px solid #ddd;
+  /* הוספת גבול */
+}
+
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-right: 50px;
+  /* ריווח בין הלוגו לשאר התוכן */
+  color: #00796b;
+
+
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+    margin: 0 auto; /* מיקום במרכז */
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #00796b;
+   position: relative; /* כדי למקם את הקו ביחס לקישור */
+  padding: 0 10px;
+}
+.nav-links a:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  height: 1.2em; /* גובה הקו */
+  border-left: 1px solid #00796b; /* סגנון הקו */
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-right: auto;
+  /* דחיפה לשמאל */
+}
+
+.auth-buttons button {
+  padding: 0.5rem 1rem;
+  background-color: #00acc1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.auth-buttons button:hover {
+  background-color: #00838f;
+}

@@ -1,4 +1,8 @@
 <div class="login-container">
+  <div class="image-side">
+    <img src="images/homePage.jpg" alt="תמונה רקע" />
+  </div>
+  <div class="form-side">
     <mat-card>
       <mat-card-header>
         <mat-card-title>התחברות</mat-card-title>
@@ -13,7 +17,7 @@
               יש להזין כתובת מייל תקינה
             </mat-error>
           </mat-form-field>
-  
+
           <mat-form-field appearance="fill">
             <mat-label>סיסמה</mat-label>
             <input matInput formControlName="password" type="password" placeholder="הזן סיסמה" />
@@ -21,7 +25,7 @@
               יש להזין סיסמה
             </mat-error>
           </mat-form-field>
-  
+
           <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
             התחבר
           </button>
@@ -29,3 +33,4 @@
       </mat-card-content>
     </mat-card>
   </div>
+</div>
