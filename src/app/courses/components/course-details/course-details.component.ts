@@ -14,6 +14,7 @@ export class CourseDetailsComponent implements OnInit {
   courseId!: number; // מזהה הקורס שמתקבל מהניווט
   courseDetails: any = null; // פרטי הקורס
   lessons: any[] = []; // רשימת השיעורים
+  imageUrl = '/images/homePage.jpg';
 
   constructor(
     private route: ActivatedRoute, // לקבלת ה-id מהניווט
