@@ -1,15 +1,16 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CoursesService } from '../../services/course.service';
 import { Router } from '@angular/router';
-import {  NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { CourseDetailsComponent } from '../course-details/course-details.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertComponent } from '../alert/alert.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-courses',
-  imports: [ NgIf, MatIconModule],
+  imports: [NgIf, MatIconModule],
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.css'
 })
@@ -19,9 +20,14 @@ export class CoursesComponent implements OnInit {
   selectedCourseId = signal<number | null>(null); // ID של הקורס שנבחר
   isToggling: boolean = false; // מנגנון למניעת לחיצות כפולות
   // selectedCourse = signal<any>(null);
-imageUrl = '/images/homePage.jpg';
+  imageUrl = '/images/homePage.jpg';
 
-  constructor(private coursesService: CoursesService, private router: Router, public dialog: MatDialog) { }
+  constructor(
+    private coursesService: CoursesService,
+    private router: Router,
+    public dialog: MatDialog,
+    private snackbar: MatSnackBar
+  ) { }
 
   isLoading = signal<boolean>(true); // מצב טעינה
 
@@ -85,6 +91,9 @@ imageUrl = '/images/homePage.jpg';
         next: () => {
           console.log(`Successfully left course ${courseId}`);
           this.enrolledCourses.set(this.enrolledCourses().filter((id) => id !== courseId));
+            this.snackbar.open('עזבת את הקורס בהצלחה', 'סגור', {
+          duration: 3000,
+        });
         },
         error: (err) => {
           console.error(`Failed to leave course ${courseId}:`, err);
@@ -100,6 +109,9 @@ imageUrl = '/images/homePage.jpg';
         next: () => {
           console.log(`Successfully enrolled in course ${courseId}`);
           this.enrolledCourses.set([...this.enrolledCourses(), courseId]);
+             this.snackbar.open('נרשמת לקורס בהצלחה', 'סגור', {
+          duration: 3000,
+        });
         },
         error: (err) => {
           console.error(`Failed to enroll in course ${courseId}:`, err);
