@@ -1,46 +1,37 @@
 .header {
   display: flex;
-  justify-content:  space-between;
-  /* יישור לשמאל */
+  justify-content: space-between;
   align-items: center;
   background: white;
   padding: 2rem;
   position: fixed;
-  /* הוספת ההגדרה הזו */
   top: 0;
-  /* הצמדה לראש המסך */
   left: 0;
-  /* הצמדה לצד שמאל של המסך */
   width: 100%;
-  /* רוחב של 100% מהמסך */
   z-index: 100;
   border-bottom: 1px solid #ddd;
-  /* הוספת גבול */
 }
-
 
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
   padding-right: 50px;
-  /* ריווח בין הלוגו לשאר התוכן */
   color: #00796b;
-
-
 }
 
 .nav-links {
   display: flex;
   gap: 1rem;
   justify-content: center;
-    margin: 0 auto; /* מיקום במרכז */
+  margin: 0 auto; /* מיקום במרכז */
+   width: 100%;
 }
 
 .nav-links a {
   text-decoration: none;
   font-weight: bold;
   color: #00796b;
-   position: relative; /* כדי למקם את הקו ביחס לקישור */
+  position: relative; /* כדי למקם את הקו ביחס לקישור */
   padding: 0 10px;
 }
 .nav-links a:not(:last-child)::after {
@@ -70,8 +61,59 @@
   display: flex;
   align-items: center;
   gap: 0.3rem;
+  margin-left: 0.5rem; /* ריווח בין הכפתורים או בין פרטי המשתמש לכפתור התנתקות */
 }
 
 .auth-buttons button:hover {
   background-color: #00838f;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-right: auto; /* דחיפה לשמאל */
+   position: relative;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #00acc1;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+   position: relative; 
+}
+.tooltip-text {
+  visibility: hidden;
+  width: auto; /* התאמת רוחב אוטומטית לטקסט */
+  background-color: #00acc1; 
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 2px 5px; /* ריווח קטן יותר */
+  position: absolute;
+  z-index: 1;
+  bottom: 100%; /* הצמדה לחלק העליון של האווטאר */
+  left: 50%;
+  transform: translateX(-50%); /* מרכוז אופקי */
+  font-size: 0.7rem; /* גודל גופן קטן יותר */
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: nowrap; /* מניעת גלישת טקסט */
+}
+
+.avatar:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.welcome-message {
+  font-weight: bold;
+  color: #00796b;
 }

@@ -1,15 +1,27 @@
 <header class="header">
   <div class="auth-buttons">
-    <button routerLink="/login">
-      <mat-icon>login</mat-icon>
-      התחבר
-    </button>
-    <button routerLink="/register">
-      <mat-icon>person_add</mat-icon>
-      הרשם
-    </button>
+    <ng-container *ngIf="!isLoggedIn$(); else userGreeting">
+      <button routerLink="/login">
+        <mat-icon>login</mat-icon>
+        התחבר
+      </button>
+      <button routerLink="/register">
+        <mat-icon>person_add</mat-icon>
+        הרשם
+      </button>
+    </ng-container>
+    <ng-template #userGreeting>
+      <div class="user-info">
+        <div class="avatar">
+              <span class="tooltip-text">שלום, {{username() }}</span>
+          {{ avatarInitial() }}</div>
+          <button (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          התנתק
+        </button>
+      </div>
+    </ng-template>
   </div>
-
 
   <nav class="nav-links">
     <a routerLink="/courses">
@@ -20,10 +32,15 @@
       <mat-icon>contact_support</mat-icon>
       צור קשר
     </a>
-    <a routerLink="/teach">ללמד</a>
+  
+    <a *ngIf="userRole() === 'teacher'" routerLink="course-management">
+      <mat-icon>settings</mat-icon>
+      ניהול קורסים
+    </a>
   </nav>
-    <div class="logo">OnlineCourse</div>
+  <div class="logo">OnlineCourse</div>
 </header>
+
 
 
 
