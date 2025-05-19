@@ -1,6 +1,7 @@
 
 import { computed, Injectable, signal, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 interface User {
@@ -26,7 +27,7 @@ export class AuthService {
   userRole = computed(() => this._currentUser()?.role || null);
   // userId = computed(() => this._currentUser()?.id || null);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private router: Router) {
    const token = this.getToken();
     if (token) {
       this.loadUserProfile();
@@ -53,6 +54,7 @@ export class AuthService {
         catchError(error => {
           console.error('Failed to load user profile', error);
           this.clearToken(); // אם הטוקן לא תקין, נתנתק
+           this.router.navigate(['/login']);
           return throwError(error);
         })
       ).subscribe();
