@@ -6,27 +6,31 @@ import { CourseDetailsComponent } from './courses/components/course-details/cour
 import { CourseManagementComponent } from './courses/components/course-management/course-management.component';
 import { HomeComponent } from './shared/components/home/home.component';
 import { CoursesComponent } from './courses/components/courses/courses.component';
-import { authGuard } from './auth/auth.guard';
-import { teacherGuard } from './auth/teacher.guard';
+import { authGuard } from './auth/guards/auth.guard';
+import { teacherGuard } from './auth/guards/teacher.guard';
+import { ContactUsComponent } from './shared/components/contact-us/contact-us.component';
 
 export const routes: Routes = [
-      { path: '', component: HomeComponent, pathMatch: 'full' }, // נתיב ברירת מחדל
+    { path: '', component: HomeComponent, pathMatch: 'full' }, // נתיב ברירת מחדל
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { 
-        path: 'courses', 
+    {
+        path: 'courses',
         component: CoursesComponent,
-        canActivate: [authGuard] 
+        canActivate: [authGuard]
     },
-    { 
-        path: 'course-details/:id', 
+    {
+        path: 'course-details/:id',
         component: CourseDetailsComponent,
-        canActivate: [authGuard] 
+        canActivate: [authGuard]
     },
-    { 
-        path: 'course-management', 
+    {
+        path: 'course-management',
         component: CourseManagementComponent,
-        canActivate: [teacherGuard] 
+        canActivate: [teacherGuard]
     },
-
+    {
+        path: 'contact-us',
+        component: ContactUsComponent
+    }
 ];

@@ -1,0 +1,26 @@
+<div class="contact-us-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ title() }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="contact-details">
+      <p>
+        <mat-icon>email</mat-icon>
+        <span>דוא"ל: <a [href]="'mailto:' + contactInfo.email">{{ contactInfo.email }}</a></span>
+      </p>
+      <p>
+        <mat-icon>phone</mat-icon>
+        <span>טלפון: <a [href]="'tel:' + contactInfo.phone">{{ contactInfo.phone }}</a></span>
+      </p>
+      <p>
+        <mat-icon>location_on</mat-icon>
+        <span>כתובת: {{ contactInfo.address }}</span>
+      </p>
+      <p class="additional-info">
+        נשמח לעמוד לשירותכם בכל שאלה או פנייה.
+        אתם מוזמנים ליצור קשר באמצעות הפרטים המופיעים מעלה, 
+        או לבקר אותנו במשרדינו בשעות הפעילות.
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>

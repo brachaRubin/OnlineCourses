@@ -13,6 +13,6 @@ import { FooterComponent } from "./shared/components/footer/footer.component";
   styleUrls: ['./app.component.css'] // Changed styleUrl to styleUrls
 })
 export class AppComponent {
-  title = 'OnlineCourse';
+  title = 'OnlineCourses';
   isLoggedIn: boolean = false;
 }

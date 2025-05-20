@@ -42,7 +42,7 @@ export class AuthService {
       this.http.get<User>(`http://localhost:3000/api/users/${this._currentUserId()}`, { headers }).pipe(
         tap(profile => {
           this._currentUser.set(profile);
-          console.log('User profile loaded:', this._currentUser());
+          // console.log('User profile loaded:', this._currentUser());
           console.log('User name:', this.userName());
           this.router.navigate(['/courses']); 
         }),
@@ -62,7 +62,7 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     return this.http.post<{ userId: number; token?: string }>(`${this.apiUrl}/login`, { email, password }).pipe(
       tap((response) => {
-        console.log('Login response:', response);
+        // console.log('Login response:', response);
         if (response.token && response.userId) {
           localStorage.setItem('token', response.token);
           this._currentUserId.set(response.userId);

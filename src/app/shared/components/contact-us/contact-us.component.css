@@ -1,0 +1,64 @@
+.contact-us-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align to top if page has other content */
+  padding: 20px;
+  margin-top: 150px; /* Increased to 150px */
+}
+
+mat-card {
+  width: 100%;
+  max-width: 600px; /* Max width for the form card */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Softer shadow like header */
+  border: 2px solid #00796b; /* Changed border color */
+  background-color: white; /* Added white background */
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between form fields */
+}
+
+mat-form-field {
+  width: 100%; /* Make form fields take full width of the card content */
+}
+
+button[mat-raised-button] {
+  align-self: flex-start; /* Align button to the start (left in LTR, right in RTL) */
+}
+
+/* RTL support for button alignment if needed explicitly */
+:host-context([dir='rtl']) button[mat-raised-button] {
+  align-self: flex-end;
+}
+
+.contact-details p {
+  display: flex;
+  align-items: center; /* Vertically align icon with text */
+  gap: 10px; /* Space between icon and text */
+  margin-bottom: 15px; /* Space between contact detail lines */
+  font-size: 1rem;
+  text-align: justify;
+}
+
+.contact-details mat-icon {
+  color: var(--primary-color); /* Use a primary color for icons, assuming you have one defined */
+}
+
+.contact-details a {
+  color: var(--accent-color); /* Use an accent color for links, assuming you have one defined */
+  text-decoration: none;
+}
+
+.contact-details a:hover {
+  text-decoration: underline;
+}
+
+.additional-info {
+  margin-top: 25px;
+  font-style: italic;
+  color: #555;
+  line-height: 1.6;
+  text-align: justify;
+}
