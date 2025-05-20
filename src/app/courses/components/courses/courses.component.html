@@ -7,12 +7,11 @@
         <div class="course-header">
           <img [src]="imageUrl" alt="{{ course.title }}" class="course-image" />
           <!-- אם מזהה הקורס נמצא ב-enrolledCourses, הצג אייקון -->
-          <mat-icon 
-            *ngIf="enrolledCourses().includes(course.id)" 
-            color="primary" 
-            class="enrolled-icon">
-            check_circle
-          </mat-icon>
+          @if (enrolledCourses().includes(course.id)) {
+            <mat-icon color="primary" class="enrolled-icon">
+              check_circle
+            </mat-icon>
+          }
         </div>
 
         <div class="course-info">
@@ -22,13 +21,12 @@
 
         <div class="course-actions">
           <!-- הצגת כפתור מתאים לפי מצב ההרשמה -->
-          <ng-container *ngIf="enrolledCourses().includes(course.id); else enrollButton">
+          @if (enrolledCourses().includes(course.id)) {
             <button (click)="toggleEnrollment(course.id)">עזוב קורס</button>
             <!-- <button (click)="removeCourse(course.id)">הסר שיעור</button> -->
-          </ng-container>
-          <ng-template #enrollButton>
+          } @else {
             <button (click)="toggleEnrollment(course.id)">הצטרף לקורס</button>
-          </ng-template>
+          }
 
           <!-- כפתור לצפייה בפרטי הקורס -->
           <button (click)="viewCourseDetails(course.id)">צפה בפרטי הקורס</button>

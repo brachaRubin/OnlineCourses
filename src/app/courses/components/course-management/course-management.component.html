@@ -4,27 +4,29 @@
   </div>
 
   <div class="course-list">
-    <mat-card *ngFor="let course of courses()" class="course-card">
-      <mat-card-title>{{ course.title }}</mat-card-title>
-      <mat-card-content>
-        <p>{{ course.description }}</p>
-      </mat-card-content>
-      <mat-card-actions>
-        <div class="actions">
-          <!-- כפתור עריכה -->
-          <button mat-icon-button color="primary" (click)="editCourse(course)" matTooltip="עריכת קורס">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <!-- כפתור מחיקה -->
-          <button mat-icon-button color="warn" (click)="deleteCourse(course.id!)" matTooltip="מחיקת קורס">
-            <mat-icon>delete</mat-icon>
-          </button>
-          <!-- כפתור לניהול שיעורים -->
-          <button mat-icon-button color="primary" (click)="openLessons(course)" matTooltip="ניהול שיעורים">
-            <mat-icon>menu_book</mat-icon>
-          </button>
-        </div>
-      </mat-card-actions>
-    </mat-card>
+    @for (course of courses(); track course.id) {
+      <mat-card class="course-card">
+        <mat-card-title>{{ course.title }}</mat-card-title>
+        <mat-card-content>
+          <p>{{ course.description }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="actions">
+            <!-- כפתור עריכה -->
+            <button mat-icon-button color="primary" (click)="editCourse(course)" matTooltip="עריכת קורס">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <!-- כפתור מחיקה -->
+            <button mat-icon-button color="warn" (click)="deleteCourse(course.id!)" matTooltip="מחיקת קורס">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <!-- כפתור לניהול שיעורים -->
+            <button mat-icon-button color="primary" (click)="openLessons(course)" matTooltip="ניהול שיעורים">
+              <mat-icon>menu_book</mat-icon>
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    }
   </div>
 </div>

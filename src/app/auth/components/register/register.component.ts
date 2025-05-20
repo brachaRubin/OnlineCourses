@@ -53,7 +53,7 @@ export class RegisterComponent {
 
       this.authService.register(name, email, password, role).subscribe({
         next: (response) => {
-          console.log('משתמש נרשם בהצלחה:', response);
+          // console.log('משתמש נרשם בהצלחה:', response);
           this.authService.saveToken(response.token); // שמירת הטוקן
           alert('נרשמת בהצלחה!');
         },

@@ -7,7 +7,7 @@ import { NgIf, CommonModule } from '@angular/common';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatIconModule, RouterModule, NgIf, CommonModule],
+  imports: [MatIconModule, RouterModule, CommonModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })

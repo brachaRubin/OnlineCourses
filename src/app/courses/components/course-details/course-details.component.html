@@ -10,15 +10,17 @@
   <!-- רשימת שיעורים -->
   <div class="lessons-section">
     <!-- <h2>רשימת שיעורים</h2> -->
-    <div *ngIf="lessons.length > 0; else noLessons" class="lessons-list">
-      <div *ngFor="let lesson of lessons" class="lesson-card">
-        <h3>{{ lesson.title }}</h3>
-        <p>{{ lesson.content }}</p>
+    @if (lessons.length > 0) {
+      <div class="lessons-list">
+        @for (lesson of lessons; track lesson.id) {
+          <div class="lesson-card">
+            <h3>{{ lesson.title }}</h3>
+            <p>{{ lesson.content }}</p>
+          </div>
+        }
       </div>
-    </div>
-
-    <ng-template #noLessons>
+    } @else {
       <p class="no-lessons">לא נמצאו שיעורים עבור הקורס.</p>
-    </ng-template>
+    }
   </div>
 </div>

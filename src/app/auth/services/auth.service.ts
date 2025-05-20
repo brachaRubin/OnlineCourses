@@ -18,17 +18,17 @@ interface User {
 export class AuthService {
   private apiUrl = 'http://localhost:3000/api/auth';
   private _currentUser = signal<User | null>(null);
-  private _currentUserId = signal<number | null>(null); 
+  private _currentUserId = signal<number | null>(null);
 
   isAuthenticated = computed(() => !!this._currentUser());
   userName = computed(() => this._currentUser()?.name || null);
   userRole = computed(() => this._currentUser()?.role || null);
-  userId = computed(() => this._currentUser()?.id || null); 
+  userId = computed(() => this._currentUser()?.id || null);
 
   constructor(private http: HttpClient, private router: Router) {
     const token = this.getToken();
     if (token) {
-      this.loadUserProfile(); 
+      this.loadUserProfile();
     }
   }
 
@@ -42,15 +42,14 @@ export class AuthService {
       this.http.get<User>(`http://localhost:3000/api/users/${this._currentUserId()}`, { headers }).pipe(
         tap(profile => {
           this._currentUser.set(profile);
-          // console.log('User profile loaded:', this._currentUser());
           console.log('User name:', this.userName());
-          this.router.navigate(['/courses']); 
+          this.router.navigate(['/courses']);
         }),
         catchError(error => {
           console.error('Failed to load user profile', error);
-          this.clearToken(); 
+          this.clearToken();
           this.router.navigate(['/login']);
-          return throwError(error); 
+          return throwError(error);
         })
       ).subscribe();
     } else {
@@ -66,7 +65,7 @@ export class AuthService {
         if (response.token && response.userId) {
           localStorage.setItem('token', response.token);
           this._currentUserId.set(response.userId);
-          this.loadUserProfile(); 
+          this.loadUserProfile();
         } else {
           console.error('Login response missing token or userId');
         }
@@ -103,7 +102,7 @@ export class AuthService {
   clearToken(): void {
     localStorage.removeItem('token');
     this._currentUser.set(null);
-    this._currentUserId.set(null); 
+    this._currentUserId.set(null);
     // No navigation from here in the reverted state, router.navigate was in HeaderComponent or guards
   }
 }

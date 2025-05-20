@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-course-details',
-  imports: [NgFor,CommonModule],
+  imports: [CommonModule],
   templateUrl: './course-details.component.html',
   styleUrl: './course-details.component.css'
 })

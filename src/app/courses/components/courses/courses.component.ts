@@ -11,7 +11,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-courses',
-  imports: [NgIf, MatIconModule],
+  imports: [MatIconModule],
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.css'
 })
@@ -39,28 +39,15 @@ export class CoursesComponent implements OnInit {
     this.isLoading.set(true); // התחלת טעינה
     this.loadCourses();
     this.userId$.set(this.authService.userId());
-    // const studentId = this.getStudentId();
-    // if (studentId && studentId > 0) {
-    //   this.loadEnrolledCourses(studentId);
-    // } else {
-    //   console.error('Invalid student ID:', studentId);
-    // }
     const userId = this.userId$();
     if (userId !== null) {
       this.loadEnrolledCourses(userId);
     } else {
       console.error('Invalid user ID:', userId);
     }
-  console.log(this.userId$());
-  
+    // console.log(this.userId$());
     this.isLoading.set(false); // סיום טעינה
   }
-  
-  // getStudentId(): number {
-  //   // קבלת ה-ID מתוך Local Storage
-  //   const id = localStorage.getItem('userId');
-  //   return id ? parseInt(id, 10) : 0; // החזר ברירת מחדל (0) אם ה-ID לא קיים
-  // }
 
   // טעינת רשימת הקורסים מהשרת
   loadCourses() {
@@ -95,10 +82,8 @@ export class CoursesComponent implements OnInit {
       return;
     }
     this.isToggling = true;
-
     const userId = this.userId$();
-    console.log('User ID:', userId);
-
+    // console.log('User ID:', userId);
     if (isEnrolled) {
       console.log('Leaving course...');
       if (userId !== null) {
@@ -106,9 +91,9 @@ export class CoursesComponent implements OnInit {
           next: () => {
             console.log(`Successfully left course ${courseId}`);
             this.enrolledCourses.set(this.enrolledCourses().filter((id) => id !== courseId));
-              this.snackbar.open('עזבת את הקורס בהצלחה', 'סגור', {
-            duration: 3000,
-          });
+            this.snackbar.open('עזבת את הקורס בהצלחה', 'סגור', {
+              duration: 3000,
+            });
           },
           error: (err) => {
             console.error(`Failed to leave course ${courseId}:`, err);
