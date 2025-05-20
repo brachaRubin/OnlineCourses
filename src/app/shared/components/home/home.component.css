@@ -1,4 +1,3 @@
-
 .home-container {
   display: flex;
   flex-direction: column;
@@ -17,16 +16,19 @@
 .wide-image img {
   width: 100%;
   height: auto;
+  display: block; /* מונע רווחים מיותרים מתחת לתמונה */
 }
 
 /* עיצוב שלושת התמונות */
-.image-grid {
+.home-container .image-grid { 
    display: flex;
   justify-content: space-around;
-   align-items: center; /* מרכוז אנכי */
+  align-items: center; 
+  padding: 20px 0;
   width: 80%; /* הקטנת הרוחב כדי ליצור רווחים בצדדים */
   margin: 0 auto; /* מרכוז אופקי */
 }
+
 .elementor-widget-image img {
   vertical-align: middle;
   display: inline-block;
@@ -49,6 +51,13 @@
   transform: scale(0.9);
 }
 
+.image-item {
+  width: 31%; /* Allows three items to fit side-by-side with some space */
+  box-sizing: border-box;
+  padding: 8px; /* Adds a small space around each image item */
+  display: flex; /* Make it a flex container */
+  flex-direction: column; /* Stack image and text vertically */
+}
 
 .image-item:hover {
   transform: scale(1.1); /* הגדלה במעבר עכבר */
@@ -60,9 +69,22 @@
   border-radius: 8px;
   margin-bottom: 10px;
 }
+
 .highlighted-text {
   font-weight: bold; /* משקל גופן עבה */
   /* color: red; צבע אדום */
   font-size: 1.2em; /* גודל גופן גדול יותר */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* צל */
+  margin-top: auto; /* Push text to the bottom of the flex item */
+}
+
+@media (max-width: 768px) {
+  .home-container .image-grid { /* גם כאן נגביר ספציפיות */
+    flex-direction: column; 
+    align-items: center; 
+  }
+  .image-item {
+    width: 90%; /* Adjust width for stacked items on smaller screens */
+    margin-bottom: 15px; /* Add space between stacked items */
+  }
 }

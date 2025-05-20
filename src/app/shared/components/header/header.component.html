@@ -1,6 +1,6 @@
 <header class="header">
   <div class="auth-buttons">
-    <ng-container *ngIf="!isLoggedIn$(); else userGreeting">
+    <ng-container *ngIf="!isLoggedIn(); else userGreeting">
       <button routerLink="/login">
         <mat-icon>login</mat-icon>
         התחבר
@@ -40,9 +40,3 @@
   </nav>
   <div class="logo">OnlineCourse</div>
 </header>
-
-
-
-
-
-

@@ -1,8 +1,8 @@
-import { Component, computed, OnInit } from '@angular/core';
+import { Component, OnInit, computed } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
-import { CommonModule, NgIf } from '@angular/common';
+import { NgIf, CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -13,14 +13,14 @@ import { CommonModule, NgIf } from '@angular/common';
 })
 export class HeaderComponent implements OnInit {
 
-  username = computed(() => this.authService.userName());
-  userRole = computed(() => this.authService.userRole());
-  isLoggedIn$ = computed(() => this.authService.isAuthenticated());
-  avatarInitial = computed(() => {
-    const name = this.authService.userName();
+  username = computed(() => this.authService.userName()); 
+  userRole = computed(() => this.authService.userRole());   
+  isLoggedIn = computed(() => this.authService.isAuthenticated()); 
+  
+  avatarInitial = computed(() => { 
+    const name = this.authService.userName(); 
     return name ? name.charAt(0).toUpperCase() : '';
   });
-
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(): void {
-    this.authService.clearToken();
-    this.router.navigate(['/']);
+    this.authService.clearToken(); 
+    this.router.navigate(['/']); 
   }
 }
