@@ -1,3 +1,15 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1 1 auto; /* Allows the main content to grow and fill available space */
+  display: flex; /* Optional: If you want main's direct children to also use flex */
+  flex-direction: column; /* Optional: If main's children should stack vertically */
+}
+
 .container {
     /* padding: 20px; */
     text-align: center; /* זה כבר קיים */
@@ -11,17 +23,6 @@ h2 {
     text-align: center; /* מרכז את הכותרת המשנית */
 }
 
-.footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #f1f1f1;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
 .spacer {
     flex: 1 1 auto;
 }
-
-  

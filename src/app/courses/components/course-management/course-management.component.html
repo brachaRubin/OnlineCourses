@@ -1,6 +1,6 @@
 <div class="container">
   <div class="header">
-    <button mat-raised-button color="primary" (click)="addCourse()">Add Course</button>
+    <button mat-raised-button color="primary" (click)="addCourse()">הוספת קורס</button>
   </div>
 
   <div class="course-list">
@@ -12,15 +12,15 @@
       <mat-card-actions>
         <div class="actions">
           <!-- כפתור עריכה -->
-          <button mat-icon-button color="primary" (click)="editCourse(course)" matTooltip="Edit Course">
+          <button mat-icon-button color="primary" (click)="editCourse(course)" matTooltip="עריכת קורס">
             <mat-icon>edit</mat-icon>
           </button>
           <!-- כפתור מחיקה -->
-          <button mat-icon-button color="warn" (click)="deleteCourse(course.id!)" matTooltip="Delete Course">
+          <button mat-icon-button color="warn" (click)="deleteCourse(course.id!)" matTooltip="מחיקת קורס">
             <mat-icon>delete</mat-icon>
           </button>
           <!-- כפתור לניהול שיעורים -->
-          <button mat-icon-button color="primary" (click)="openLessons(course)" matTooltip="Manage Lessons">
+          <button mat-icon-button color="primary" (click)="openLessons(course)" matTooltip="ניהול שיעורים">
             <mat-icon>menu_book</mat-icon>
           </button>
         </div>

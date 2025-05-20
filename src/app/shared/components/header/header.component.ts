@@ -1,14 +1,15 @@
 import { Component, computed, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../auth/services/auth.service';
+import { AuthService } from '../../../auth/services/auth.service';
 import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [MatIconModule, RouterModule, NgIf, CommonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
 

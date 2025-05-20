@@ -1,0 +1,16 @@
+.footer {
+  background-color: #f8f9fa; /* Light grey background */
+  color: #343a40; /* Darker text for readability */
+  padding: 1.5rem 2rem;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  width: 100%;
+  /* Use margin-top: auto if the parent is a flex container and you want to push it to the bottom */
+  /* For a fixed footer at the bottom of the viewport, other CSS strategies might be needed */
+}
+
+.footer-content p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #6c757d; /* Softer grey for the text */
+}

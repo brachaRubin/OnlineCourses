@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { CoursesService } from '../../services/course.service';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
@@ -7,6 +7,7 @@ import { CourseDetailsComponent } from '../course-details/course-details.compone
 import { MatDialog } from '@angular/material/dialog';
 import { AlertComponent } from '../alert/alert.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-courses',
@@ -20,13 +21,16 @@ export class CoursesComponent implements OnInit {
   selectedCourseId = signal<number | null>(null); // ID של הקורס שנבחר
   isToggling: boolean = false; // מנגנון למניעת לחיצות כפולות
   // selectedCourse = signal<any>(null);
+  userId$ = signal<number | null>(null); // מזהה המשתמש
+  userRole$ = computed(() => this.authService.userRole());
   imageUrl = '/images/homePage.jpg';
 
   constructor(
     private coursesService: CoursesService,
     private router: Router,
     public dialog: MatDialog,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private authService: AuthService
   ) { }
 
   isLoading = signal<boolean>(true); // מצב טעינה
@@ -34,19 +38,29 @@ export class CoursesComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading.set(true); // התחלת טעינה
     this.loadCourses();
-    const studentId = this.getStudentId();
-    if (studentId && studentId > 0) {
-      this.loadEnrolledCourses(studentId);
+    this.userId$.set(this.authService.userId());
+    // const studentId = this.getStudentId();
+    // if (studentId && studentId > 0) {
+    //   this.loadEnrolledCourses(studentId);
+    // } else {
+    //   console.error('Invalid student ID:', studentId);
+    // }
+    const userId = this.userId$();
+    if (userId !== null) {
+      this.loadEnrolledCourses(userId);
     } else {
-      console.error('Invalid student ID:', studentId);
+      console.error('Invalid user ID:', userId);
     }
+  console.log(this.userId$());
+  
     this.isLoading.set(false); // סיום טעינה
   }
-  getStudentId(): number {
-    // קבלת ה-ID מתוך Local Storage
-    const id = localStorage.getItem('userId');
-    return id ? parseInt(id, 10) : 0; // החזר ברירת מחדל (0) אם ה-ID לא קיים
-  }
+  
+  // getStudentId(): number {
+  //   // קבלת ה-ID מתוך Local Storage
+  //   const id = localStorage.getItem('userId');
+  //   return id ? parseInt(id, 10) : 0; // החזר ברירת מחדל (0) אם ה-ID לא קיים
+  // }
 
   // טעינת רשימת הקורסים מהשרת
   loadCourses() {
@@ -82,45 +96,57 @@ export class CoursesComponent implements OnInit {
     }
     this.isToggling = true;
 
-    const userId = this.getStudentId();
+    const userId = this.userId$();
     console.log('User ID:', userId);
 
     if (isEnrolled) {
       console.log('Leaving course...');
-      this.coursesService.leaveCourse(courseId, userId).subscribe({
-        next: () => {
-          console.log(`Successfully left course ${courseId}`);
-          this.enrolledCourses.set(this.enrolledCourses().filter((id) => id !== courseId));
-            this.snackbar.open('עזבת את הקורס בהצלחה', 'סגור', {
-          duration: 3000,
+      if (userId !== null) {
+        this.coursesService.leaveCourse(courseId, userId).subscribe({
+          next: () => {
+            console.log(`Successfully left course ${courseId}`);
+            this.enrolledCourses.set(this.enrolledCourses().filter((id) => id !== courseId));
+              this.snackbar.open('עזבת את הקורס בהצלחה', 'סגור', {
+            duration: 3000,
+          });
+          },
+          error: (err) => {
+            console.error(`Failed to leave course ${courseId}:`, err);
+            alert('Failed to leave the course. Please try again.');
+          },
+          complete: () => {
+            this.isToggling = false;
+          },
         });
-        },
-        error: (err) => {
-          console.error(`Failed to leave course ${courseId}:`, err);
-          alert('Failed to leave the course. Please try again.');
-        },
-        complete: () => {
-          this.isToggling = false;
-        },
-      });
+      } else {
+        console.error('User ID is null. Cannot leave course.');
+        alert('User ID is invalid. Please log in again.');
+        this.isToggling = false;
+      }
     } else {
       console.log('Enrolling in course...');
-      this.coursesService.enrollInCourse(courseId, userId).subscribe({
-        next: () => {
-          console.log(`Successfully enrolled in course ${courseId}`);
-          this.enrolledCourses.set([...this.enrolledCourses(), courseId]);
-             this.snackbar.open('נרשמת לקורס בהצלחה', 'סגור', {
-          duration: 3000,
+      if (userId !== null) {
+        this.coursesService.enrollInCourse(courseId, userId).subscribe({
+          next: () => {
+            console.log(`Successfully enrolled in course ${courseId}`);
+            this.enrolledCourses.set([...this.enrolledCourses(), courseId]);
+            this.snackbar.open('נרשמת לקורס בהצלחה', 'סגור', {
+              duration: 3000,
+            });
+          },
+          error: (err) => {
+            console.error(`Failed to enroll in course ${courseId}:`, err);
+            alert('Failed to enroll in the course. Please try again.');
+          },
+          complete: () => {
+            this.isToggling = false;
+          },
         });
-        },
-        error: (err) => {
-          console.error(`Failed to enroll in course ${courseId}:`, err);
-          alert('Failed to enroll in the course. Please try again.');
-        },
-        complete: () => {
-          this.isToggling = false;
-        },
-      });
+      } else {
+        console.error('User ID is null. Cannot enroll in course.');
+        alert('User ID is invalid. Please log in again.');
+        this.isToggling = false;
+      }
     }
   }
 
@@ -145,18 +171,5 @@ export class CoursesComponent implements OnInit {
       return;
     }
 
-    // ביצוע קריאה לשרת להסרת השיעור
-    // this.coursesService.leaveCourse(courseId,).subscribe({
-    //   next: () => {
-    //     this.enrolledCourses.set(
-    //       this.enrolledCourses().filter((id) => id !== courseId)
-    //     );
-    //     console.log(`Successfully removed lesson from course ${courseId}`);
-    //   },
-    //   error: (err) => {
-    //     console.error(`Failed to remove lesson from course ${courseId}:`, err);
-    //     alert('Failed to remove the lesson. Please try again.');
-    //   }
-    // });
   }
 }

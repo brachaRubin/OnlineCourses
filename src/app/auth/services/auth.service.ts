@@ -25,7 +25,7 @@ export class AuthService {
   isAuthenticated = computed(() => !!this._currentUser());
   userName = computed(() => this._currentUser()?.name || null);
   userRole = computed(() => this._currentUser()?.role || null);
-  // userId = computed(() => this._currentUser()?.id || null);
+  userId = computed(() => this._currentUser()?.id || null);
 
   constructor(private http: HttpClient,private router: Router) {
    const token = this.getToken();
@@ -49,6 +49,7 @@ export class AuthService {
           this._currentUser.set(profile);
           console.log(this._currentUser());
           console.log('user name:', this.userName());
+           this.router.navigate(['/courses']);
           
         }),
         catchError(error => {

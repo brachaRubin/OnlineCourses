@@ -14,7 +14,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-course-management',
-  imports: [ CommonModule,FormsModule,MatCardModule,MatIconModule,MatTooltipModule],
+  imports: [CommonModule, FormsModule, MatCardModule, MatIconModule, MatTooltipModule],
   templateUrl: './course-management.component.html',
   styleUrl: './course-management.component.css'
 })
@@ -25,7 +25,7 @@ export class CourseManagementComponent implements OnInit {
     private coursesService: CoursesService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadCourses(); // טוען את רשימת הקורסים עם פתיחת הקומפוננטה
@@ -35,7 +35,7 @@ export class CourseManagementComponent implements OnInit {
   loadCourses(): void {
     this.coursesService.getCourses().subscribe(
       (data) => this.courses.set(data),
-      (error) => this.showMessage('Failed to load courses', true)
+      (error) => this.showMessage('טעינת הקורסים נכשלה', true)
     );
   }
 
@@ -52,14 +52,14 @@ export class CourseManagementComponent implements OnInit {
         this.coursesService.createCourse(result).subscribe(
           (response) => {
             console.log('API Response:', response);
-            const newCourse = { ...result, id: response.id};
+            const newCourse = { ...result, id: response.id };
             console.log('New Course:', newCourse);
             this.courses.update((courses) => [...courses, newCourse]);
-            this.showMessage('Course added successfully');
+            this.showMessage('הקורס נוסף בהצלחה');
           },
           (error) => {
             console.error('Failed to add course:', error);
-            this.showMessage('Failed to add course', true);
+            this.showMessage('שגיאה בהוספת הקורס', true);
           }
         );
       }
@@ -80,9 +80,9 @@ export class CourseManagementComponent implements OnInit {
             this.courses.update((courses) =>
               courses.map((c) => (c.id === course.id ? { ...course, ...result } : c))
             );
-            this.showMessage('Course updated successfully');
+            this.showMessage('הקורס עודכן בהצלחה');
           },
-          () => this.showMessage('Failed to update course', true)
+          () => this.showMessage('עדכון הקורס נכשל', true)
         );
       }
     });
@@ -90,35 +90,19 @@ export class CourseManagementComponent implements OnInit {
 
   // פונקציה למחיקת קורס קיים
   deleteCourse(courseId: number): void {
-    if (confirm('Are you sure you want to delete this course?')) {
+    if (confirm('אתה בטוח שברצונך למחוק את הקורס?')) {
       this.coursesService.deleteCourse(courseId).subscribe(
         () => {
           this.courses.update((courses) =>
             courses.filter((course) => course.id !== courseId)
           );
-          this.showMessage('Course deleted successfully');
+          this.showMessage('הקורס נמחק בהצלחה');
         },
-        () => this.showMessage('Failed to delete course', true)
+        () => this.showMessage('שגיאה במחיקת הקורס', true)
       );
     }
   }
-
-  // // פונקציה להוספת שיעור חדש לקורס
-  // addLesson(course: Course): void {
-  //   const dialogRef = this.dialog.open(LessonFormDialogComponent, {
-  //     width: '500px',
-  //     data: { courseId: course.id }, // שולח את מזהה הקורס לדיאלוג
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result) {
-  //       this.coursesService.createLesson(course.id!, result).subscribe(
-  //         () => this.showMessage('Lesson added successfully'),
-  //         () => this.showMessage('Failed to add lesson', true)
-  //       );
-  //     }
-  //   });
-  // }
+  // פונקציה לפתיחת דיאלוג להוספת שיעורים לקורס
 
   openLessons(course: Course): void {
     const dialogRef = this.dialog.open(LessonFormDialogComponent, {
@@ -133,21 +117,7 @@ export class CourseManagementComponent implements OnInit {
     });
   }
 
-  // editLesson(course: Course, lesson: Lesson): void {
-  //   const dialogRef = this.dialog.open(LessonFormDialogComponent, {
-  //     width: '500px',
-  //     data: { courseId: course.id, lesson }, // שולח את מזהה הקורס והשיעור לדיאלוג
-  //   });
 
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result) {
-  //       this.coursesService.updateLesson(course.id!, lesson.id!, result).subscribe(
-  //         () => this.showMessage('Lesson updated successfully'),
-  //         () => this.showMessage('Failed to update lesson', true)
-  //       );
-  //     }
-  //   });
-  // }
 
   // הצגת הודעות הצלחה/שגיאה
   private showMessage(message: string, isError: boolean = false): void {

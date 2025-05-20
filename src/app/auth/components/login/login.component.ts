@@ -1,23 +1,35 @@
-import { Component, NgModule } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule,MatCardModule,MatInputModule,MatButtonModule,NgIf],
+  imports: [
+    ReactiveFormsModule,
+    MatCardModule,
+    MatInputModule,
+    MatButtonModule,
+    NgIf,
+    MatSnackBarModule,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   standalone: true,
 })
 export class LoginComponent {
   loginForm: FormGroup;
-
-  constructor(private authService:AuthService, private fb: FormBuilder, private router: Router) {
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -30,17 +42,15 @@ export class LoginComponent {
 
       this.authService.login(email, password).subscribe({
         next: (response) => {
-          // שמירת Token
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('userId', response.userId);
-          localStorage.setItem('role', response.role);
-
-          // ניווט לעמוד הקורסים
-          this.router.navigate(['/courses']);
+          console.log('Login successful, navigating via AuthService...');
         },
         error: (err) => {
           console.error('שגיאה בהתחברות:', err);
-          alert('פרטים שגויים, נסה שוב.');
+          this.snackBar.open('פרטי התחברות שגויים או שגיאת שרת. נסה שוב.', 'סגור', {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
         },
       });
     }
