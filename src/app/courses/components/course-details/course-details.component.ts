@@ -1,5 +1,5 @@
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, signal } from '@angular/core';
 import { CoursesService } from '../../services/course.service';
 import { CommonModule, NgFor } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -16,6 +16,8 @@ export class CourseDetailsComponent implements OnInit {
   courseDetails: any = null; // פרטי הקורס
   lessons: any[] = []; // רשימת השיעורים
   imageUrl = '/images/homePage.jpg';
+   selectedLesson = signal<any>(null);
+  selectedLessonIndex = signal<number>(-1);
 
   constructor(
     private route: ActivatedRoute, // לקבלת ה-id מהניווט
@@ -58,5 +60,11 @@ export class CourseDetailsComponent implements OnInit {
         console.error('Error loading lessons:', error);
       }
     );
+  }
+    onLessonSelected(lessonId: number): void {
+    this.selectedLessonIndex.set(this.lessons.findIndex(lesson => lesson.id === lessonId));
+    this.selectedLesson.set(this.lessons[this.selectedLessonIndex()]);
+    console.log('Selected lesson:', this.selectedLesson());
+    
   }
 }

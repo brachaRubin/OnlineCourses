@@ -11,17 +11,19 @@
   <div class="lessons-section">
     <!-- <h2>רשימת שיעורים</h2> -->
     @if (lessons.length > 0) {
-      <div class="lessons-list">
-        @for (lesson of lessons; track lesson.id) {
-         <app-lesson-card
-            [title]="lesson.title"
-            [content]="lesson.content"
-          ></app-lesson-card>
-           
-        }
-      </div>
+    <div class="lessons-list">
+      @for (lesson of lessons; track lesson.id) {
+        <app-lesson-card
+        [title]="lesson.title"
+        [content]="lesson.content"
+        [id]="lesson.id "
+        (lessonSelected)="onLessonSelected(lesson.id)"
+        ></app-lesson-card>
+      }
+    </div>
     } @else {
-      <p class="no-lessons">לא נמצאו שיעורים עבור הקורס.</p>
+    <p class="no-lessons">לא נמצאו שיעורים עבור הקורס.</p>
     }
   </div>
+
 </div>

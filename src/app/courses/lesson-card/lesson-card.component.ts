@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-lesson-card',
@@ -8,6 +8,14 @@ import { Component, input } from '@angular/core';
   styleUrl: './lesson-card.component.css'
 })
 export class LessonCardComponent {
- title = input<string>('');
+  title = input<string>('');
   content = input<string>('');
+  id = input<number>(0);
+
+
+  lessonSelected = output<number>();
+
+  onLessonSelected() {
+    this.lessonSelected.emit(this.id());
+  }
 }

@@ -1,4 +1,4 @@
-<div class="lesson-card">
-  <h3>{{ title() }}</h3>
+<div class="lesson-card" (click)="onLessonSelected()">
+  <h3>{{ title() | titlecase }}</h3>
   <p>{{ content() }}</p>
 </div>
