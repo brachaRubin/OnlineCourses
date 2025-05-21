@@ -7,6 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgIf } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ import { NgIf } from '@angular/common';
     MatButtonModule,
     NgIf,
     MatSnackBarModule,
+    MatIconModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
@@ -24,6 +26,7 @@ import { NgIf } from '@angular/common';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  hide = true;
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,

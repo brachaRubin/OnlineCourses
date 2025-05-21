@@ -100,3 +100,28 @@ button:disabled {
   background: #ccc;
   cursor: not-allowed;
 }
+
+:host ::ng-deep mat-form-field .mat-mdc-icon-button.mat-mdc-button-base {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  width: 30px !important; /* רוחב מותאם אישית */
+  height: 30px !important; /* גובה מותאם אישית */
+  padding: 0 !important; /* הסרת ריפוד פנימי שעלול לגרום לו להיראות גדול יותר */
+  /* הקפדה על יישור נכון של האייקון בתוך הכפתור */
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+:host ::ng-deep mat-form-field .mat-mdc-icon-button.mat-mdc-button-base .mat-icon {
+  font-size: 20px !important; /* גודל אייקון מותאם אישית */
+  width: 20px !important;   /* רוחב אייקון מותאם אישית */
+  height: 20px !important;  /* גובה אייקון מותאם אישית */
+  line-height: 20px !important; /* יישור אנכי של האייקון */
+  color: #757575 !important; /* צבע ברירת מחדל */
+}
+
+:host ::ng-deep mat-form-field .mat-mdc-icon-button.mat-mdc-button-base:hover .mat-icon {
+  color: #333 !important; /* צבע במעבר עכבר */
+}

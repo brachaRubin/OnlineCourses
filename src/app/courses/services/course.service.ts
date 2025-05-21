@@ -17,15 +17,15 @@ import { Lesson } from '../models/lesson.model';
 export class CoursesService {
   private baseUrl = 'http://localhost:3000/api/courses';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // פונקציה לניהול כותרות
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token'); // עדיף להשתמש ב-HttpInterceptor במקום
     return new HttpHeaders({
       Authorization: `Bearer ${token}`,
-      });
-    }
+    });
+  }
 
   // טיפול בשגיאות HTTP
   private handleError(error: any): Observable<never> {
@@ -35,7 +35,6 @@ export class CoursesService {
 
   // פונקציות כלליות לכל המשתמשים
   getCourses(): Observable<Course[]> {
-    console.log('Token from localStorage:', localStorage.getItem('token'));
     return this.http
       .get<Course[]>(this.baseUrl, { headers: this.getHeaders() })
       .pipe(catchError(this.handleError));
@@ -52,7 +51,7 @@ export class CoursesService {
       console.error('Invalid student ID:', studentId);
       return throwError(() => new Error('Invalid student ID'));
     }
-    
+
     return this.http.get<{ id: number, title: string, description: string, teacherId: number }[]>(`${this.baseUrl}/student/${studentId}`, { headers: this.getHeaders() });
   }
   enrollInCourse(courseId: number, userId: number): Observable<void> {
@@ -68,11 +67,11 @@ export class CoursesService {
       })
     );
   }
-  
+
   leaveCourse(courseId: number, userId: number): Observable<any> {
     return this.http.delete(
       `${this.baseUrl}/${courseId}/unenroll`,
-      { 
+      {
         headers: this.getHeaders(),
         body: { userId } // שליחת userId בגוף הבקשה
       }

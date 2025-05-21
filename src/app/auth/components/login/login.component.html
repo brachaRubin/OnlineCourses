@@ -20,7 +20,10 @@
 
           <mat-form-field appearance="fill">
             <mat-label>סיסמה</mat-label>
-            <input matInput formControlName="password" type="password" placeholder="הזן סיסמה" />
+            <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" placeholder="הזן סיסמה" />
+            <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
             <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
               יש להזין סיסמה
             </mat-error>
