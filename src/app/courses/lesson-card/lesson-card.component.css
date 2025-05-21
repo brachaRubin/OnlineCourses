@@ -1,0 +1,27 @@
+/* filepath: src/app/courses/components/lesson-card/lesson-card.component.css */
+.lesson-card {
+  width: 100%; /* רוחב כמו ה-course-header */
+  background-color: #ffffff;
+  border: 3px solid #00acc1; /* מסגרת עם צבע האווטאר */
+  border-radius: 15px; /* מעוגל כמו ה-course-header */
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box; /* הוספת box-sizing */
+}
+
+.lesson-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.lesson-card h3 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #00acc1;
+}
+
+.lesson-card p {
+  font-size: 1em;
+  color: #555;
+}

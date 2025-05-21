@@ -13,10 +13,11 @@
     @if (lessons.length > 0) {
       <div class="lessons-list">
         @for (lesson of lessons; track lesson.id) {
-          <div class="lesson-card">
-            <h3>{{ lesson.title }}</h3>
-            <p>{{ lesson.content }}</p>
-          </div>
+         <app-lesson-card
+            [title]="lesson.title"
+            [content]="lesson.content"
+          ></app-lesson-card>
+           
         }
       </div>
     } @else {

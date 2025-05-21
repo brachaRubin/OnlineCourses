@@ -3,10 +3,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CoursesService } from '../../services/course.service';
 import { CommonModule, NgFor } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { LessonCardComponent } from '../../lesson-card/lesson-card.component';
 
 @Component({
   selector: 'app-course-details',
-  imports: [CommonModule],
+  imports: [CommonModule,LessonCardComponent],
   templateUrl: './course-details.component.html',
   styleUrl: './course-details.component.css'
 })

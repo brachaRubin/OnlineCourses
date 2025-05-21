@@ -55,7 +55,7 @@ export class CoursesService {
     return this.http.get<{ id: number, title: string, description: string, teacherId: number }[]>(`${this.baseUrl}/student/${studentId}`, { headers: this.getHeaders() });
   }
   enrollInCourse(courseId: number, userId: number): Observable<void> {
-    console.log('Enrolling in course:', { courseId, userId }); // לוג לבדיקה
+    console.log('Enrolling in course:', { courseId }); // לוג לבדיקה
     return this.http.post<void>(
       `${this.baseUrl}/${courseId}/enroll`,
       { userId }, // שליחת userId בגוף הבקשה
