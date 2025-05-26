@@ -40,3 +40,9 @@ h1 {
   align-items: flex-start;
   gap: 10px;
 }
+.no-courses {
+  font-size: 1.2em;
+  color: #555;
+  text-align: center;
+  margin-top: 20px;
+}

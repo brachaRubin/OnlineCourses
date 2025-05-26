@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { Course } from '../../models/course.model';
 import { Lesson } from '../../models/lesson.model';
 import { CoursesService } from '../../services/course.service';
@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CourseFormDialogComponent } from '../dialogs/course-form-dialog/course-form-dialog.component';
 import { LessonFormDialogComponent } from '../dialogs/lesson-form-dialog/lesson-form-dialog.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-course-management',
@@ -20,9 +21,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 })
 export class CourseManagementComponent implements OnInit {
   courses = signal<Course[]>([]); // רשימת הקורסים
-
+  teacherId = computed(() => this.authService.userId());
   constructor(
     private coursesService: CoursesService,
+    private authService: AuthService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) { }
@@ -34,7 +36,12 @@ export class CourseManagementComponent implements OnInit {
   // פונקציה לטעינת כל הקורסים מהשרת
   loadCourses(): void {
     this.coursesService.getCourses().subscribe(
-      (data) => this.courses.set(data),
+      (data) => {
+        const filteredCourses = data.filter(course => course.teacherId === this.teacherId());
+        this.courses.set(filteredCourses);
+        console.log('Courses loaded:', filteredCourses);
+
+      },
       (error) => this.showMessage('טעינת הקורסים נכשלה', true)
     );
   }
